@@ -4,10 +4,10 @@ var fs = require('fs');
 
 var router = express.Router();
 
-router.get('/list', function (req, res) {
+router.get('/getUser/:username', function (req, res) {
   fs.readFile(path.join(__dirname, '../../../data/user.json'), 'utf8', function (err, data) {
-    console.log( data );
-    res.end( data );
+            var users = JSON.parse(data);
+            res.json(users[req.params.username])
   });
 });
 

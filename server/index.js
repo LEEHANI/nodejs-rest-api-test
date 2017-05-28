@@ -1,10 +1,11 @@
 var express = require('express');
 var ejs = require('ejs');
+var bodyParser = require('body-parser');
 var app = express();
 var path = require('path');
 
 // disable view-caching
-app.disable('view cache'); //app은 express 인스턴스
+app.disable('view cache');
 
 // config template engine
 app.set('views', path.join(__dirname, '../client/templates'));
@@ -14,10 +15,14 @@ app.engine('html', ejs.renderFile);
 // serve static files
 app.use(express.static('public'));
 
+// parse json
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
 // routes
 app.use('/api', require('./api'));
-app.use('/', require('./www')); //여기 안에있는 index 찾아, export한 것을 받아서 사용
+app.use('/', require('./www'));
 
 app.listen(3000, function () {
-  console.log('Rest API Server listening on port 3000!');
+  console.log('rest api server listening on port 3000!');
 });

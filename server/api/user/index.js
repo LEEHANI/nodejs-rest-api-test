@@ -25,7 +25,7 @@ router.post('/addUser/:username', function(req, res){
         }
 
         // LOAD DATA & CHECK DUPLICATION
-        fs.readFile( __dirname + "../../../data/user.json", 'utf8',  function(err, data){
+        fs.readFile(path.join(__dirname, '../../../data/user.json'), 'utf8',  function(err, data){
             var users = JSON.parse(data);
             if(users[username]){
                 // DUPLICATION FOUND
@@ -39,7 +39,7 @@ router.post('/addUser/:username', function(req, res){
             users[username] = req.body;
 
             // SAVE DATA
-            fs.writeFile(__dirname + "../../../data/user.json",
+            fs.writeFile(path.join(__dirname, '../../../data/user.json'),
                          JSON.stringify(users, null, '\t'), "utf8", function(err, data){
                 result = {"success": 1};
                 res.json(result);

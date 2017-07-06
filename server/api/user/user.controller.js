@@ -35,7 +35,7 @@ exports.listFindOne = function (req, res) {
 };
 
 exports.userUpdate = function (req, res) {
-    Userdb.findById(req.params.user_id, function (err, user) {
+    Userdb.findOne({ user: req.params.user_id }, function (err, user) {
         if (err) return res.status(500).json({ error: 'database failure' });
         if (!user) return res.status(404).json({ error: 'book not found' });
 
@@ -62,7 +62,6 @@ exports.userDelete = function (req, res) {
         res.status(204).end();
     })
 };
-
 
 
 exports.getAll = function (req, res) {
